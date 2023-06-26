@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+contract TokenVesting {
+    IERC20 public token;
+
+    struct VestingSchedule {
+        uint256 amount;
+        uint256 releaseTime;
+    }
+
+    mapping(address => VestingSchedule) public vestingSchedules;
+
+    constructor(address _token) {
+        token = IERC20(_token);
+    }
+
+    function addVestingSchedule(address _beneficiary, uint256 _amount, uint256 _releaseTime) external {
+        require(vestingSchedules[_beneficiary].amount == 0, "Vesting schedule already exists for beneficiary");
+        require(_releaseTime > block.timestamp, "Release time must be in the future");
+
+        VestingSchedule storage schedule = vestingSchedules[_beneficiary];
+        schedule.amount = _amount;
+        schedule.releaseTime = _releaseTime;
+
+        token.transferFrom(msg.sender, address(this), _amount);
+    }
+
+    function claim() external {
+        VestingSchedule storage schedule = vestingSchedules[msg.sender];
+        require(schedule.amount > 0, "No vesting schedule found for the sender");
+        require(block.timestamp >= schedule.releaseTime, "Vesting period has not ended yet");
+
+        uint256 amount = schedule.amount;
+        schedule.amount = 0;
+
+        token.transfer(msg.sender, amount);
+    }
+}
