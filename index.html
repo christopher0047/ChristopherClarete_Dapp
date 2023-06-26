@@ -1,0 +1,49 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vesting DApp</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Vesting DApp</h1>
+
+    <div id="wallet-section">
+        <h2>Connect Wallet</h2>
+        <button id="connect-wallet-btn">Connect Wallet</button>
+        <p id="wallet-address"></p>
+    </div>
+
+    <div id="admin-section">
+        <h2>Register Organization</h2>
+        <input type="text" id="org-name" placeholder="Organization Name">
+        <input type="text" id="token-address" placeholder="Token Contract Address">
+        <button id="register-org-btn">Register Organization</button>
+
+        <h2>Add Stakeholder</h2>
+        <input type="text" id="stakeholder-address" placeholder="Stakeholder Address">
+        <input type="number" id="vesting-period" placeholder="Vesting Period (in seconds)">
+        <button id="add-stakeholder-btn">Add Stakeholder</button>
+
+        <h2>Update Whitelist</h2>
+        <input type="text" id="whitelist-address" placeholder="Whitelist Address">
+        <input type="checkbox" id="whitelisted">
+        <label for="whitelisted">Whitelisted</label>
+        <button id="update-whitelist-btn">Update Whitelist</button>
+    </div>
+
+    <div id="user-section">
+        <h2>Withdraw Tokens</h2>
+        <button id="withdraw-btn">Withdraw</button>
+    </div>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.5.0.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
